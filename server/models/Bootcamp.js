@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 const {Schema} = mongoose
 
 const BootcampSchema = new Schema({
@@ -37,11 +37,9 @@ const BootcampSchema = new Schema({
         type: {
             type: String,
             enum: ['Point'],
-            required: true
           },
           coordinates: {
             type: [Number],
-            required: true,
             index: '2dsphere'
         },
         formattedAddress: String,
