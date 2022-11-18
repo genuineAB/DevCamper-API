@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const morgan = require('morgan');
-const connectDB = require('../config/db');
+const connectDB = require('./config/db');
 const colors = require('colors');
 
 //Route Files
