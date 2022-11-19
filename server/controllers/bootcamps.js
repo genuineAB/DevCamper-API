@@ -11,6 +11,7 @@ const getBootCamps = async (req, res, next) => {
 
         res.status(200).json({
             success: true,
+            count: bootcamps.length,
             data: bootcamps
         })
     } catch (error) {
@@ -54,7 +55,9 @@ const getBootCamp = async (req, res, next) => {
 
 const createBootCamp =async (req, res, next) => {
     try {
-        const bootcamp = await Bootcamp.create(req.body);
+        const bootcamp = await Bootcamp.create(req.params.id);
+
+       
 
         res.status(201).json({
             success: true,
@@ -63,7 +66,7 @@ const createBootCamp =async (req, res, next) => {
     } catch (error) {
         res.status(400).json({
             success: false
-        })
+        });
     }
     
 }
@@ -73,8 +76,26 @@ const createBootCamp =async (req, res, next) => {
 // @route PATCH /api/v1/bootcamps/:id
 // @access Private
 
-const updateBootCamp = (req, res, next) => {
-    res.status(200).json({success: true, msg: 'Update Bootcamp'});;
+const updateBootCamp = async (req, res, next) => {
+    try {
+        const bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body);
+
+        if(!bootcamp){
+            return res.status(400).json({
+                success: false
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            data: bootcamp
+        })
+
+    } catch (error) {
+        res.status(400).json({
+            success: false
+        });
+    }
 }
 
 
@@ -82,8 +103,24 @@ const updateBootCamp = (req, res, next) => {
 // @route DELETE /api/v1/bootcamps
 // @access Private
 
-const deleteBootCamp = (req, res, next) => {
-    res.status(200).json({success: true, msg: 'Delete Bootcamp'});
+const deleteBootCamp = async (req, res, next) => {
+    try {
+        const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
+
+        if(!bootcamp){
+            return res.status(400).json({
+                success: false
+            })
+        }
+
+        res.status(200).json({
+            success: true
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false
+        })
+    }
 }
 
 module.exports={getBootCamps, getBootCamp, createBootCamp, updateBootCamp, deleteBootCamp}
