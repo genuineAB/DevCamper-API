@@ -42,9 +42,8 @@ const getBootCamp = async (req, res, next) => {
             data: bootcamp
         });
     } catch (error) {
-        res.status(500).json({
-            success: false
-        })
+        next(error)
+        
     }
 }
 
