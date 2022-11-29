@@ -22,7 +22,7 @@ const getBootCamps = async (req, res, next) => {
             data: bootcamps
         })
     } catch (error) {
-        next(new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404));
+        next(error);
     }
     
 }
@@ -47,7 +47,7 @@ const getBootCamp = async (req, res, next) => {
             data: bootcamp
         });
     } catch (error) {
-        next(new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404));
+        next(error);
         
     }
 }
@@ -59,18 +59,15 @@ const getBootCamp = async (req, res, next) => {
 
 const createBootCamp =async (req, res, next) => {
     try {
-        const bootcamp = await Bootcamp.create(req.params.id);
+        const bootcamp = await Bootcamp.create(req.body);
 
-       
 
         res.status(201).json({
             success: true,
             data: bootcamp
         })
     } catch (error) {
-        res.status(400).json({
-            success: false
-        });
+        next(error);
     }
     
 }
@@ -96,7 +93,7 @@ const updateBootCamp = async (req, res, next) => {
         })
 
     } catch (error) {
-        next(new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404));
+        next(error);
     }
 }
 
@@ -119,7 +116,7 @@ const deleteBootCamp = async (req, res, next) => {
             success: true
         })
     } catch (error) {
-        next(new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404));
+        next(error);
     }
 }
 
